@@ -1,0 +1,39 @@
+apply plugin: 'kotlin'
+apply plugin: 'application'
+
+mainClassName = 'io.ktor.server.netty.DevelopmentEngine'
+
+repositories {
+    maven { url "https://dl.bintray.com/kotlin/ktor" }
+    maven { url "https://dl.bintray.com/kotlin/kotlinx" }
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile "io.ktor:ktor-server-core:$ktor_version"
+    compile "io.ktor:ktor-server-netty:$ktor_version"
+    compile project(":kxhtml-isomorphic-jvm")
+}
+
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+task copyBundleJs(type: Copy, dependsOn: ":frontend:bundle") {
+    from("${rootProject.findProject(":frontend").buildDir}/bundle") {
+        include "*.js"
+        include "*.js.map"
+    }
+    into "$buildDir/resources/main/js"
+}
+
+processResources.dependsOn(copyBundleJs)

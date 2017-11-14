@@ -1,0 +1,28 @@
+buildscript {
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:$frontend_plugin_version"
+    }
+}
+
+apply plugin: 'kotlin2js'
+apply plugin: "kotlin-dce-js"
+apply plugin: 'org.jetbrains.kotlin.frontend'
+
+dependencies {
+    compile project(":kxhtml-isomorphic-js")
+}
+
+compileKotlin2Js {
+    kotlinOptions {
+        sourceMap = true
+        sourceMapEmbedSources = "always"
+        moduleKind = 'commonjs'
+        metaInfo = false
+    }
+}
+
+kotlinFrontend {
+    webpackBundle {
+        bundleName = "frontend"
+    }
+}

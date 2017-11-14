@@ -1,0 +1,6 @@
+rootProject.name = 'kxhtml-isomorphic'
+
+include 'kxhtml-isomorphic-jvm', 'kxhtml-isomorphic-js'
+include 'backend'
+include 'shared'
+include 'frontend'
