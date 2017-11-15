@@ -9,7 +9,7 @@ dependencies {
     testCompile "org.jetbrains.kotlin:kotlin-test-js:$kotlin_version"
 }
 
-compileKotlin2Js {
+[compileKotlin2Js, compileTestKotlin2Js]*.configure {
     kotlinOptions {
         sourceMap = true
         sourceMapEmbedSources = "always"
@@ -17,3 +17,15 @@ compileKotlin2Js {
         metaInfo = true
     }
 }
+
+task populateNodeModules(type: Copy, dependsOn: compileKotlin2Js) {
+    from compileKotlin2Js.destinationDir
+
+    configurations.testCompile.each {
+        from zipTree(it.absolutePath).matching { include '*.js' }
+    }
+
+    into "${buildDir}/node_modules"
+}
+
+testClasses.dependsOn populateNodeModules
