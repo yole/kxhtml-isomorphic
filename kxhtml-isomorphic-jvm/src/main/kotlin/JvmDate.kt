@@ -10,6 +10,12 @@ actual class Date {
         calendar = Calendar.getInstance()
     }
 
+    actual constructor(value: Number) {
+        calendar = Calendar.getInstance().apply {
+            timeInMillis = value.toLong()
+        }
+    }
+
     constructor(date: java.util.Date) {
         calendar = Calendar.getInstance().apply {
             time = date
@@ -23,14 +29,15 @@ actual class Date {
     actual fun getFullYear() = calendar[Calendar.YEAR]
     actual fun getHours() = calendar[Calendar.HOUR_OF_DAY]
     actual fun getMinutes() = calendar[Calendar.MINUTE]
+    actual fun getSeconds() = calendar[Calendar.SECOND]
     actual fun getTime(): Number = calendar.timeInMillis
 
     override fun equals(other: Any?): Boolean = other is Date && other.calendar.time == calendar.time
 }
 
 val apiDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
-val readableDateFormat = SimpleDateFormat("EEEE, MMMM d", Locale.getDefault())
-val readableTimeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+val readableDateFormat = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
+val readableTimeFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
 
 actual fun parseDate(dateString: String): Date = Date(apiDateFormat.parse(dateString))
 

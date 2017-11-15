@@ -15,6 +15,7 @@ import io.ktor.routing.Routing
 import io.ktor.routing.get
 import kotlinx.html.*
 import kotlinx.html.stream.createHTML
+import kotlinx.serialization.SerialContext
 import kotlinx.serialization.json.JSON
 import java.util.*
 
@@ -57,12 +58,20 @@ private fun renderIndexPage(): String {
 
 private fun serializeNewMessages(): String {
     val messages = generateRandomMessages(1)
-    return JSON.stringify(messages[0])
+    return messages[0].toJSON()
+    val context = SerialContext().apply {
+        registerSerializer(Date::class, DateSerializer)
+    }
+    return try {
+        JSON(context = context).stringify(messages[0])
+    } catch (e: Exception) {
+        ""
+    }
 }
 
 fun generateRandomMessages(count: Int): List<Message> {
     return List(count) {
-        Message(generateRandomText(), generateRandomAuthor())
+        Message(generateRandomText(), generateRandomAuthor(), Date())
     }
 }
 

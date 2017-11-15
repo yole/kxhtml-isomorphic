@@ -2,8 +2,8 @@ package org.jetbrains.kxhtml.isomorphic.frontend
 
 import kotlinx.html.div
 import kotlinx.html.dom.append
-import kotlinx.serialization.json.JSON
 import org.jetbrains.kxhtml.isomorphic.Message
+import org.jetbrains.kxhtml.isomorphic.fromJSON
 import org.jetbrains.kxhtml.isomorphic.renderMessage
 import org.w3c.dom.HTMLElement
 import org.w3c.xhr.XMLHttpRequest
@@ -50,8 +50,9 @@ fun <T> async(x: suspend () -> T): Promise<T> {
 
 fun fetchNewMessages() {
     async {
+        console.log("Fetching new messages")
         val data = httpGet("http://localhost:8080/newMessages")
-        val message = JSON.parse<Message>(data)
+        val message = Message.fromJSON(data)
         val contentDiv = document.getElementsByClassName("content").item(0) as HTMLElement
         contentDiv.append.div {
             renderMessage(message)
@@ -60,5 +61,6 @@ fun fetchNewMessages() {
 }
 
 fun main(args: Array<String>) {
+    console.log("Frontend loaded")
     window.setInterval(::fetchNewMessages, 1000)
 }

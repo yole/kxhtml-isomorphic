@@ -10,6 +10,8 @@ fun HtmlBlockTag.renderMessage(message: Message) {
         i {
             + " by "
             + message.author
+            + " at "
+            + message.date.toReadableDateTimeString()
         }
     }
 }
