@@ -1,8 +1,10 @@
 apply plugin: 'kotlin-platform-jvm'
+apply plugin: 'kotlinx-serialization'
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "org.jetbrains.kotlinx:kotlinx-html-jvm:${kotlinx_html_version}"
+    compile "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version"
     expectedBy project(":shared")
     testCompile "junit:junit:4.12"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"

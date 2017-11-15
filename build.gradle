@@ -4,20 +4,24 @@ allprojects {
         ext.ktor_version = '0.9.0'
         ext.kotlinx_html_version = '0.6.6'
         ext.frontend_plugin_version = '0.0.23'
+        ext.serialization_version = '0.2'
 
         repositories {
             maven { url 'http://dl.bintray.com/kotlin/kotlin-eap' }
             maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2' }
             maven { url "https://plugins.gradle.org/m2/" }
+            maven { url "https://kotlin.bintray.com/kotlinx" }
             jcenter()
         }
         dependencies {
             classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+            classpath "org.jetbrains.kotlinx:kotlinx-gradle-serialization-plugin:$serialization_version"
         }
     }
 
     repositories {
         maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2' }
+        maven { url "https://kotlin.bintray.com/kotlinx" }
         jcenter()
     }
 }
