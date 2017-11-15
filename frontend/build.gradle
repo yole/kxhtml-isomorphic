@@ -24,5 +24,12 @@ compileKotlin2Js {
 kotlinFrontend {
     webpackBundle {
         bundleName = "frontend"
+        sourceMapEnabled = true
+    }
+}
+
+kotlin {
+    experimental {
+        coroutines "enable"
     }
 }

@@ -8,3 +8,12 @@ dependencies {
     expectedBy project(":shared")
     testCompile "org.jetbrains.kotlin:kotlin-test-js:$kotlin_version"
 }
+
+compileKotlin2Js {
+    kotlinOptions {
+        sourceMap = true
+        sourceMapEmbedSources = "always"
+        moduleKind = 'commonjs'
+        metaInfo = true
+    }
+}
