@@ -41,6 +41,8 @@ fun Application.main() {
             resources("css")
         }
     }
+    val port = environment.config.config("ktor").config("deployment").property("port").getString()
+    println("Backend running on http://localhost:$port")
 }
 
 private fun renderIndexPage(): String {
