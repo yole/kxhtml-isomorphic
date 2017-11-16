@@ -34,8 +34,11 @@ fun Application.main() {
         get("/newMessages") {
             call.respondText(serializeNewMessages(), ContentType.Application.Json)
         }
-        static("static") {
-            resources()
+        static("static/js") {
+            resources("js")
+        }
+        static("static/css") {
+            resources("css")
         }
     }
 }
@@ -45,6 +48,7 @@ private fun renderIndexPage(): String {
     return createHTML().html {
         head {
             script(src = "static/js/frontend.bundle.js") {}
+            styleLink("static/css/style.css")
         }
         body {
             div("content") {
@@ -59,14 +63,6 @@ private fun renderIndexPage(): String {
 private fun serializeNewMessages(): String {
     val messages = generateRandomMessages(1)
     return messages[0].toJSON()
-    val context = SerialContext().apply {
-        registerSerializer(Date::class, DateSerializer)
-    }
-    return try {
-        JSON(context = context).stringify(messages[0])
-    } catch (e: Exception) {
-        ""
-    }
 }
 
 fun generateRandomMessages(count: Int): List<Message> {

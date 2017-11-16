@@ -1,11 +1,9 @@
 package org.jetbrains.kxhtml.isomorphic
 
-import kotlinx.html.HtmlBlockTag
-import kotlinx.html.div
-import kotlinx.html.i
+import kotlinx.html.*
 
 fun HtmlBlockTag.renderMessage(message: Message) {
-    div {
+    div(classes = "message") {
         +message.text
         i {
             + " by "
