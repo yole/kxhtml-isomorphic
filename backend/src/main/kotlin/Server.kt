@@ -10,6 +10,7 @@ import io.ktor.features.DefaultHeaders
 import io.ktor.features.StatusPages
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
+import io.ktor.response.respond
 import io.ktor.response.respondText
 import io.ktor.routing.Routing
 import io.ktor.routing.get
@@ -24,7 +25,7 @@ fun Application.main() {
     install(CallLogging)
     install(StatusPages) {
         exception<Throwable> { cause ->
-            call.response.status(HttpStatusCode.InternalServerError)
+            call.respond(HttpStatusCode.InternalServerError)
         }
     }
     install(Routing) {
