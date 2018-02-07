@@ -1,5 +1,6 @@
 package org.jetbrains.kxhtml.isomorphic.frontend
 
+import kotlinx.coroutines.experimental.async
 import kotlinx.html.div
 import kotlinx.html.dom.append
 import org.jetbrains.kxhtml.isomorphic.Message
@@ -9,11 +10,7 @@ import org.w3c.dom.HTMLElement
 import org.w3c.xhr.XMLHttpRequest
 import kotlin.browser.document
 import kotlin.browser.window
-import kotlin.coroutines.experimental.Continuation
-import kotlin.coroutines.experimental.EmptyCoroutineContext
-import kotlin.coroutines.experimental.startCoroutine
 import kotlin.coroutines.experimental.suspendCoroutine
-import kotlin.js.Promise
 
 suspend fun httpGet(url: String): String = suspendCoroutine { c ->
     val xhr = XMLHttpRequest()
@@ -30,22 +27,6 @@ suspend fun httpGet(url: String): String = suspendCoroutine { c ->
     }
     xhr.open("GET", url)
     xhr.send()
-}
-
-fun <T> async(x: suspend () -> T): Promise<T> {
-    return Promise { resolve, reject ->
-        x.startCoroutine(object : Continuation<T> {
-            override val context = EmptyCoroutineContext
-
-            override fun resume(value: T) {
-                resolve(value)
-            }
-
-            override fun resumeWithException(exception: Throwable) {
-                reject(exception)
-            }
-        })
-    }
 }
 
 fun fetchNewMessages() {
