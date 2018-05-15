@@ -10,7 +10,7 @@ apply plugin: 'org.jetbrains.kotlin.frontend'
 
 dependencies {
     compile project(":kxhtml-isomorphic-js")
-    compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core-js:0.22.1'
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-core-js:$kotlinx_coroutines_version"
 }
 
 compileKotlin2Js {
